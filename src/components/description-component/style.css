@@ -1,0 +1,50 @@
+.trail_desc{
+    height: auto;
+    display: flex;
+    width: auto;
+    /* border-bottom: 5px solid #a600ff; */
+    margin-bottom: 40px;
+}
+.col1 {
+    flex: 1;
+}
+
+.col2 {
+    flex: 1;
+}
+.steps_description,
+.equipment_description,
+.indications_description,
+.obs_description{
+    width: auto;
+    height: auto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #3d3d3d;
+    display: flex;
+    padding-left: 5vh;
+    gap: 20px;
+}
+.equipment_description{
+    padding-top: 75px;
+}
+.obs_description{
+    padding-top: 75px;
+}
+.obs_description_input,
+.indications_description_input,
+.steps_description_input,
+.equipment_description_input
+ {
+    border-style: none;
+    width: 650px;
+    height: auto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    color: rgba(61, 61, 61, 0.75);
+    padding-left: 5vh;
+    padding-bottom: 10px;
+}

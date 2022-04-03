@@ -1,0 +1,11 @@
+.sticky-header{
+    top: 0;
+    background-color: #ffffff;
+    position: sticky;
+}
+.trail-page{
+    background-color: #fcfcfc;
+}
+.tab_line{
+    display: flex;
+}

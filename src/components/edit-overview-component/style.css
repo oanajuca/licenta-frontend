@@ -1,0 +1,28 @@
+
+.overview-labels {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    color: #3d3d3d;
+    display: flex;
+}
+
+.trail_text_input{
+    box-sizing: border-box;
+    resize: none;
+    width: 300%;
+    height: 216px;
+    border: 2px solid #d2d2d2;
+    border-radius: 7px;
+    font-size: 18px;
+    padding: 10px;
+    color: #3d3d3d;
+}
+.edit_overview_wrapper{
+    display: flex;
+}
+.col1_wrapper{
+    margin-right: 650px;
+    margin-left: 60px;
+
+}

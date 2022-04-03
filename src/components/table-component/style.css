@@ -1,0 +1,110 @@
+.trails-wrapper {
+    width: 90%;
+    margin: auto;
+}
+.trails-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    margin-top: 10px;
+}
+.table-title {
+    color: #3d3d3d;
+    font-weight: 500;
+    font-size: 26px;
+    padding: 25px 0;
+}
+
+.table-body {
+    background: #ffffff;
+    box-shadow: 2px 2px 15px #0000001a;
+    table-layout: fixed;
+    border-collapse: collapse;
+    color: #3d3d3d;
+    border-radius: 5px;
+    border: 1px solid rgba(210, 210, 210, 0.5);
+    line-height: 27px;
+    width: 100%;
+}
+.table-body thead tr th {
+    text-align: left;
+    padding: 10px 30px;
+    border: 1px solid rgba(210, 210, 210, 0.5);
+    color: #228B22;
+    opacity: 75%;
+    font-size: 16px;
+    font-weight: 600;
+}
+.table-body tbody tr td {
+    padding: 10px 30px;
+    border: 1px solid rgba(210, 210, 210, 0.5);
+    cursor: pointer;
+}
+
+.table-body tbody tr:nth-child(odd) {
+    background-color: #d2d2d226;
+}
+.table-body tbody tr:hover {
+    background-color: #e4ecff;
+}
+
+.table-cell {
+    display: flex;
+    align-items: center;
+}
+.client__logo {
+    max-width: 78px;
+    margin-right: 40px;
+}
+
+th.client {
+    width: 25%;
+}
+th.technology {
+    width: 40%;
+}
+th.people {
+    width: 30%;
+}
+.pagination_wrapper {
+    width: 90%;
+    text-align: center;
+    display: block;
+    position: fixed;
+    bottom: 0em;
+}
+.paginationItem {
+    outline: none;
+    border-radius: 50%;
+    border: hidden;
+    background: none;
+    line-height: 40px;
+    width: 40px;
+    font-size: 24px;
+    color: #3d3d3d;
+    cursor: pointer;
+}
+.round {
+    outline: solid;
+    outline-color: #d2d2d2;
+    border-radius: 50%;
+    border: hidden;
+    background: none;
+    line-height: 40px;
+    width: 40px;
+    font-size: 24px;
+    color: #3d3d3d;
+    margin: 35px;
+    cursor: pointer;
+}
+
+.active-page {
+    background-color: #0a54ff;
+    color: #fff;
+}
+.prev.disabled,
+.next.disabled {
+    pointer-events: none;
+    color: #d2d2d2;
+}

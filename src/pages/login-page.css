@@ -1,0 +1,53 @@
+.login__wrapper{
+    background-color: #b8860b;
+    box-sizing: border-box;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.button__signIn{
+    border-radius: 7px;
+    background-color: #228B22;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 32px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #228B22;
+    margin-top: 10px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction: column;
+}
+.button__signIn:hover{
+    transform: scale(102%);
+}
+.logo__pos{
+    margin: 0 auto;
+}
+.center{
+    text-align: center;
+}
+.down{
+    margin: 30px;
+}
+.centered__link{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+.spinner{
+    width: 30%;
+    margin: auto;
+    padding-top: 50%;
+    padding-left: 35%;
+}
+.centered__card{
+    width: 550px;
+    height: 350px;
+    margin: 0 auto;
+}

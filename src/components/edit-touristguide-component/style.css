@@ -1,0 +1,16 @@
+.guide_text_input{
+    width: 550px;
+    height: 60px;
+    border-radius: 7px;
+}
+.inputs_fields{
+    padding-bottom: 40px;
+}
+.col1_wr{
+    z-index: 1;
+    margin-left: 25px;
+}
+.col2_wr{
+    padding-left: 255px;
+    z-index: 1;
+}

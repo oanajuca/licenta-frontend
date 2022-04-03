@@ -1,0 +1,49 @@
+.register_wrapper{
+    background-color: #b8860b;
+    box-sizing: border-box;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.new-user_wrapper {
+    width: 50%;
+    margin: auto;
+    max-width: 600px;
+}
+
+.genSuccess {
+    box-sizing: border-box;
+    position: absolute;
+    background-color: #b8860b;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    top: 108px;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    left: 0;
+    display: flex;
+}
+.genSuccessText {
+    padding: 0;
+    width: 50%;
+    margin: auto;
+}
+.button__createuser{
+    border-radius: 7px;
+    background-color: #228B22;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 32px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #228B22;
+    margin-top: 10px;
+}
+.button__createuser:hover{
+    transform: scale(102%);
+}
+.register-form{
+    display:flex;
+    flex-direction: column;
+}

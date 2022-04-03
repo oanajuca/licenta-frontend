@@ -1,0 +1,109 @@
+.home_header {
+    position: sticky;
+    min-width: 90%;
+    height: 110px;
+    width: 100%;
+    margin: auto;
+    margin-top: 0px;
+    background: #FFD700;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    z-index: 5;
+}
+.logo_header{
+    position: relative;
+    min-width: 216px;
+    display: flex;
+    margin: auto;
+    margin-left: 2%;
+    cursor: pointer;
+}
+.header_title{
+    
+    font-size: 25px;
+    display: flex;
+    font-weight: 700;
+    font-family: Poppins, sans-serif ;
+
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 92px;
+    right: 10%;
+    z-index: 12;
+    background-color: #ffffff;
+    border: 1px solid #d2d2d2;
+    border-radius: 7px;
+    color: #3d3d3d;
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 400;
+    display: flex;
+    flex-wrap: wrap;
+    width: 210%;
+}
+.user-dropdown::before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -11px;
+    right: 15%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #d2d2d2;
+}
+.user-dropdown::after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -9px;
+    right: 15%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+}
+.btn-container {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-element {
+    padding: 4% 8%;
+    cursor: pointer;
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    gap: 5%;
+}
+.dropdown-element:first-child {
+    border-bottom: 1px solid #d2d2d280;
+}
+.user-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.dropdown-element:visited {
+    color: inherit;
+}
+.dropdown-element:hover {
+    background-color: #e4ecff;
+}
+.dropdown-element:active {
+    background-color: #e4ecff;
+}
+.sign_out_button {
+    position: relative;
+    margin: 0 50px;
+    width: 10%;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: ease-in-out 0.5ms;
+}
+.sign_out_button:hover {
+    transform: scale(102%);
+}

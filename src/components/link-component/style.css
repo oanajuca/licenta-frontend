@@ -1,0 +1,11 @@
+.link_component{
+    font-weight: 500;
+    font-size: 16px;
+    color: #228b22;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.1 ease;
+}
+.link_component:hover{
+    color:#228b22d2;
+}
