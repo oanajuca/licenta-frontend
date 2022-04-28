@@ -1,7 +1,10 @@
 .comment_zone{
-    width: 225%;
+    width: 120%;
     height: 200px;
 }
 .comment{
     padding-bottom: 20px;
+}
+.stars{
+    display: flex;
 }

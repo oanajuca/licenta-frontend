@@ -10,28 +10,31 @@ export default function EditOverview(props) {
   const { register, handleSubmit } = useForm({ defaultValues: descrip });
   const [value, setValue] = useState();
   const submitForm = (data) => {
-    const some = [data].map((element) => {
-      JSON.stringify({
-        Trails:
-          [{
-            Id: element.Id, ShortDescription: element.ShortDescription, Steps: element.Steps, Equipment: element.Equipment, Indications: element.Indications,  Observations: element.Observations,
-          }],
-        TrailId: data.TrailId,
-      });
-      return element;
-    });
-    console.log(some);
-    const dataJson = JSON.stringify(data);
-    console.log(dataJson); // data will be transfered with save button (submit for test)
+     const dataJson = JSON.stringify({"Descriptions" : [{
+     Id:data.Id,
+     Steps: data.Steps,
+     Indications: data.Indications ,
+      Equipment:data.Equipment,
+     Observations:data.Observations,
+     TrailId: data.TrailId,
+     ShortDescription: data.ShortDescription,}],
+     TrailId: data.TrailId
+   })
+   console.log(dataJson);
+    fetch(`http://localhost:8088/apuseniilapas/api/description/save/${trailId}`, {
+      method: 'POST',
+      headers :{'Content-Type': 'text/json', 'charset': 'utf-8'},
+      body: dataJson,
+    }).then((response) => console.log(response));
   };
   return (
       <div>
            {!descrip ? (<Spinner />) : (
   <form onSubmit={handleSubmit(submitForm)}>
+    <input {...register('TrailId')} type="hidden" value={trailId} />
                   {descrip.map((des) => (
                     <div className="edit_overview_wrapper">
                     <div key={des.ShortDescription}>
-                    <input {...register('TrailId')} type="hidden" value={trailId} />
                     <input {...register('Id')} type="hidden" value={des.Id} />
                     </div>
                     <div className="col1_wrapper">
@@ -95,7 +98,7 @@ export default function EditOverview(props) {
                   </div>
                 </div>
               ))}
-            <button type="submit">Submit</button>
+            <button className="save_overview" type="submit">Salveaza modificarile</button>
           </form>
       
          

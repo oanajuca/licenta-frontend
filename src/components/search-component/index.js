@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import { SearchIcon } from './search-icon';
+import { useDetectOutsideClick} from '../../helpers/useDetectOutsideClick'
 
 function SearchInput() {
+  const dropdownRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [trails, setTrails] = useState([]);
+  const [dropdownActive, setDropdownActive] = useDetectOutsideClick(dropdownRef, false);
   const [noResults, setNoResults] = useState('');
   const navigate = useNavigate();
-
+  const toggleSearch = () => setDropdownActive(!dropdownActive);
   useEffect(() => {
     const loadTrails = async () => {
       fetch(`http://localhost:8088/apuseniilapas/api/trail/all`, {
@@ -43,7 +46,7 @@ function SearchInput() {
   };
 
   return (
-    <div className="search_input__wrapper">
+    <div className="search_input__wrapper" ref={dropdownRef}>
       <div className="search_input__box">
         <div className="search_icon__wrapper">
           <i className="search_icon">{SearchIcon}</i>
@@ -51,11 +54,14 @@ function SearchInput() {
         <input
           className="search_input"
           type="text"
-          placeholder="Search"
+          placeholder="Căutare"
           value={searchTerm}
           onChange={(e) => onChangeHandler(e.target.value)}
+          onClick={toggleSearch}
         />
       </div>
+      {dropdownActive && (
+        <div>
       {searchTerm.length > 0 && (
       <div className="dropdown-container ">
         {noResults && <p>{noResults}</p>}
@@ -67,7 +73,7 @@ function SearchInput() {
                       <div
                         key={searchResults.Id}
                         className="clientHover"
-                        onClick={() => navigate(`/trail/${searchResult.Id}`)}
+                        onClick={() => navigate(`/trail/${searchResult.Id}?tab=0`)}
                         handleClick={handlclick}
                       >
                         {' '}
@@ -79,6 +85,8 @@ function SearchInput() {
         )}
       </div>
       )}
+    </div>
+    )}
     </div>
   );
 }

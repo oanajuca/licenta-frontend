@@ -10,28 +10,34 @@ export default function EditTouristGuide(props) {
   const { register, handleSubmit } = useForm({ defaultValues: ghid });
   const [value, setValue] = useState();
   const submitForm = (data) => {
-    const some = [data].map((element) => {
-      JSON.stringify({
-        Trails:
-          [{
-            Id: element.Id, ShortDescription: element.ShortDescription, Steps: element.Steps, Equipment: element.Equipment, Indications: element.Indications,  Observations: element.Observations,
-          }],
-        TrailId: data.TrailId,
-      });
-      return element;
-    });
-    console.log(some);
-    const dataJson = JSON.stringify(data);
-    console.log(dataJson); // data will be transfered with save button (submit for test)
+    const dataJson = JSON.stringify({"TouristGuides" : [{
+      Id:data.Id,
+      Discover:data.Discover,
+      Promote: data.Promote,
+      Camping:data.Camping,
+      Fire: data.Fire ,
+      Deviation:data.Deviation,
+      Noise: data.Noise,
+      Environment: data.Environment,
+      Rules: data.Rules ,
+      Garbage: data.Garbage}],
+      TrailId: data.TrailId
+    })
+    console.log(dataJson);
+    fetch(`http://localhost:8088/apuseniilapas/api/touristguide/save/${trailId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: dataJson,
+    }).then((response) => console.log(response));
   };
   return (
       <div>
            {!ghid ? (<Spinner />) : (
                <form onSubmit={handleSubmit(submitForm)}>
+                 <input {...register('TrailId')} type="hidden" value={trailId} />
                {ghid.map((gu) => (
                  <div className="edit_overview_wrapper">
                  <div key={gu.Discover}>
-                 <input {...register('TrailTouristGuide.TrailId')} type="hidden" value={trailId} />
                  <input {...register('Id')} type="hidden" value={gu.Id} />
                  </div>
                  <div className="col1_wr">
@@ -130,7 +136,7 @@ export default function EditTouristGuide(props) {
                </div>
              </div>
            ))}
-         <button type="submit">Submit</button>
+         <button className="save_guide" type="submit">Salveaza modificarile</button>
        </form>
            )}
            </div>

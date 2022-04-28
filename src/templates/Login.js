@@ -13,7 +13,7 @@ function Login() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate('');
- // const { dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   useEffect(() => {
     const activeSession = localStorage.getItem('userSession');
     if (activeSession) navigate('/home');
@@ -37,8 +37,8 @@ function Login() {
       })
       .then((data) => {
         localStorage.setItem('userSession', JSON.stringify(data));
-       // dispatch({ payload: data, type: 'LOGIN' });
-        // needs a  token sent from backend
+       dispatch({ payload: data, type: 'LOGIN' });
+  
         setTimeout(() => {
           navigate('/home');
         });
@@ -66,13 +66,13 @@ function Login() {
 
                 <FormInput
                   type="password"
-                  label="Password"
+                  label="Parola"
                   value={password}
                   setValue={setPassword}
                 />
 
                 <Button className="button__signIn" type="submit" handleClick={handleSubmit}>
-                  Sign In
+                  Autentificare
                 </Button>
               </form>
               <div className="centered__link">

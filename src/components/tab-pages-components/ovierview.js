@@ -5,6 +5,7 @@ import Descriptions from "../description-component";
 import "./overview.css";
 import { useParams } from "react-router-dom";
 import EditOverview from "../edit-overview-component";
+import EditTabs from "../edit-tabs-component";
 
 export default function Overview({ isEditable }) {
   const [descriptions, setDescriptions] = useState([]);
@@ -52,7 +53,8 @@ export default function Overview({ isEditable }) {
              )}
               {isEditable && (
                 <div>
-                {showEdits ? (<EditOverview descrip={descriptions} trailId={trail.Id} />) : (<Spinner />)}
+                {showEdits ? (<EditOverview descrip={descriptions} trailId={trail.Id} /> ) : (<Spinner />)}
+                {/* {showEdits ? (<EditTabs tra={trail} TrailId={trail.Id} /> ) : (<Spinner />)} */}
             </div>
             )}
       </div>

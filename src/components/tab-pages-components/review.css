@@ -1,5 +1,44 @@
 .write-icon{
-    position: relative;
+    position: fixed;
+    width: 100px;
+    height: 65px;
+    border-radius: 7px;
+    border: none;
+    right: 20px;
+    bottom: 10px;
+}
+.titlul_paginii{
+    font-size: 40px;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    display: flex;
+    border: 5px solid;
+    width: 20%;
+    background: black;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    
+}
+.comment_zone{
+    width: 120%;
+    height: 150px;
+}
+
+.delete_review{
     display: flex;
     align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 32px;
+    color: #cc2936;
+    background-color: rgba(204, 41, 54, 0.1);
+    border-radius: 7px;
+    border-color: rgba(204, 41, 54, 0.1);
+    margin: 0 auto;
+    margin-bottom: 60px;
+    cursor: pointer;
 }

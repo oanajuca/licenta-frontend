@@ -10,6 +10,7 @@ function FormInput({
   const [genError, setGenError] = useState(false);
   const [inputType, setInputType] = useState(type === 'password' ? 'password' : 'text');
   const toggleInput = () => (inputType === 'password' ? setInputType('text') : setInputType('password'));
+
   // validate fields when clicking outside the box
   const handleBlur = (event) => {
     event.preventDefault();
@@ -20,14 +21,17 @@ function FormInput({
           ? setError('Este necesară introducerea unui username.')
           : setError('');
         break;
-      case 'Password':
+      case 'Parola':
         value.length < 3
           ? setError('Este neceesară introducerea unei parole.')
           : setError('');
         break;
-      case 'Username*':
-      case 'Email address*':
-      case 'Temporary password*':
+        case 'Username*':
+        case 'Prenume*':
+        case 'Nume*':
+          case 'Parola*':
+        case 'Adresa email*':
+        case 'Parola Temporara*':
         if (value.length === 0) {
           setGenError(true);
           setInputError('Completați toate câmpurile');
@@ -70,6 +74,7 @@ function FormInput({
           id={`${label}-input`}
         />
         {type === 'password' && (<i className="eyecon" onClick={() => toggleInput()}>{inputType === 'password' ? EyeOpenIcon : EyeCloseIcon}</i>)}
+        {type === 'role'}
       </div>
       {error && <p className="wrongFormInput">{error}</p>}
     </div>

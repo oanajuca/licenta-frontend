@@ -108,3 +108,15 @@ th.people {
     pointer-events: none;
     color: #d2d2d2;
 }
+.add-client-button {
+    width: 243px;
+    height: 57px;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #228B22;
+    border-radius: 7px;
+    cursor: pointer;
+    border: hidden;
+}

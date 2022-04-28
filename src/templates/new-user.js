@@ -20,7 +20,7 @@ function NewUser() {
 
   const handleDismiss = () => setInputError(!inputError);
   useEffect(() => {
-    if (username.length > 2 && password.length > 6 && email.length > 2 ) {
+    if (firstname.length > 2 && lastname.length > 2 && username.length > 2 && password.length > 6 && email.length > 2 ) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
@@ -39,8 +39,6 @@ function NewUser() {
             navigate('/');
             return response;
           }
-          // NO ERRORS IN ENDPOINT AS OF NOW!
-          // IT WILL LET YOU CREATE USERS WITH SAME CREDENTIALS, EXCEPT SAME USERNAME
           throw new Error(response.status);
         }).then(() => {
           setTimeout(() => { <p></p>; });
@@ -48,7 +46,6 @@ function NewUser() {
           setError('Ceva nu a mers.');
         });
     } else {
-      // Conditions Failed
       setError('Unul sau mai multe câmpuri nu îndeplinesc cerințele. Încercați din nou.');
     }
   };
@@ -73,19 +70,19 @@ function NewUser() {
         <form className="register-form">
           <FormInput
               type="text"
-              label="FirstName*"
+              label="Prenume*"
               value={firstname}
               setValue={setFirstName}
               setInputError={setInputError}
-              placeholder="e.g. Jane"
+              placeholder="e.g. Ioana"
             />
              <FormInput
               type="text"
-              label="LastName*"
+              label="Nume*"
               value={lastname}
               setValue={setLastName}
               setInputError={setInputError}
-              placeholder="e.g.Doe"
+              placeholder="e.g.Popescu"
             />
             <FormInput
               type="text"
@@ -93,20 +90,20 @@ function NewUser() {
               value={username}
               setValue={setUsername}
               setInputError={setInputError}
-              placeholder="e.g. jane.doe"
+              placeholder="e.g. ioana.popescu"
             />
 
             <FormInput
               type="email"
-              label="Email address*"
+              label="Adresa email*"
               value={email}
               setValue={setEmail}
               setInputError={setInputError}
-              placeholder="e.g. jane.doe@yahoo.com"
+              placeholder="e.g. ioana.popescu@yahoo.com"
             />
             <FormInput
-              type="role"
-              label="Role"
+              type="hidden"
+              label="Rol"
               value={role}
               setValue={setRole}
               setInputError={setInputError}
@@ -114,13 +111,13 @@ function NewUser() {
             />
             <FormInput
               type="password"
-              label="Password*"
+              label="Parola*"
               value={password}
               setValue={setPassword}
               setInputError={setInputError}
-              placeholder="min. 7 characters"
+              placeholder=""
             />
-          <Button disabled={!isFormValid} type="submit" className="button__createuser" handleClick={handleCreate}> Create</Button>
+          <Button disabled={!isFormValid} type="submit" className="button__createuser" handleClick={handleCreate}> Creare</Button>
         </form>
       </CardComponent>
     </div>

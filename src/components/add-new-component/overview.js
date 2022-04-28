@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Spinner from "../spinner-component";
+import './style.css';
 
 
 

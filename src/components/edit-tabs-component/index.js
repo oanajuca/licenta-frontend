@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import useQuery from '../../helpers/UseQuery';
 import Overview from '../tab-pages-components/ovierview';
 import Map from '../tab-pages-components/map';
 import Button from '../button-component';
+import Spinner from '../spinner-component';
 import Popup, { INITIAL_POPUP_CONFIG } from '../popup-component';
 import Review from '../tab-pages-components/review';
 import {TimeIcon, DistanceIcon, LocationIcon, DifficultyIcon} from '../tab-component/icons';
@@ -12,7 +14,9 @@ import TouristGuide from '../tab-pages-components/ghid';
 
 const DIFFICULTIES =['Usor','Mediu','Greu'];
 
-function EditTabs() {
+function EditTabs(props) {
+  const {TrailId} = props;
+  const {tra} =props;
   const navigate = useNavigate('');
   const query = useQuery();
   const [selectedImage, setSelectedImage] = useState();
@@ -22,10 +26,11 @@ function EditTabs() {
   const params = useParams();
   const [formIsValid, setFormIsValid] = useState(true);
   const [popupConfig, setPopupConfig] = useState(INITIAL_POPUP_CONFIG);
+  const { register, handleSubmit } = useForm({ defaultValues: tra });
   const closePopup = () => {
     setPopupConfig(INITIAL_POPUP_CONFIG);
   };
-  const tabs = ['Despre', 'Harta', ,'Ghidul Turistului','Recenzii'];
+  const tabs = ['Despre', 'Harta','Ghidul Turistului','Recenzii'];
   const changeTab = (tabIndex) => {
     closePopup();
 
@@ -33,7 +38,7 @@ function EditTabs() {
     navigate(`/edit/${params.id}?tab=${tabIndex}`);
   };
   useEffect(() => {
-    const loadAbout = async () => {
+     const loadAbout = async () => {
       fetch(`http://localhost:8088/apuseniilapas/api/trail/${params.id}`, {
         method: 'GET',
       })
@@ -41,10 +46,10 @@ function EditTabs() {
         .then((data) => {
           setAbout(data)
         setDifficulty(data.TrailDifficulty)});
-    };
+    }; 
     const currTab = query.get('tab');
     setActiveTab(tabs[currTab]);
-    loadAbout();
+     loadAbout();
   }, [params.id, query]);
 
   const onSubmit = () => {
@@ -94,12 +99,27 @@ function EditTabs() {
   const changeTabAction = (tabIndex) => {
     if (tabs[tabIndex] !== activeTab) openPopup('changeTab', tabIndex);
   };
+  const submitForm = (data) => {
+    const dataJson = JSON.stringify({"Trail" : [{
+      Id:data.Id,
+      Mark: data.Mark,
+        Location: data.Location,
+       Distance:data.Distance,
+      Time: data.Time ,
+      }],
+      Description: data.Description,
+      TrailId: data.TrailId
+    })
+    console.log(dataJson);
+    
+  };
   return (
     <div className="Tabs">
       <div className="tabs_header_comp">
         <div className="edit_header">
-         {/*  <div className="edit_header_comp"> */}
-           {/*  <div className="photo">
+       
+           <div className="edit_header_comp"> 
+             <div className="photo">
               {selectedImage && (
               <img
                 className="newPhoto"
@@ -118,12 +138,12 @@ function EditTabs() {
                   setAbout(event.target.value);
                   setSelectedImage(event.target.files[0]);
                 }}
-              /> */}
-
+              />
         
-             {/* <img width={100} height={100} style={{ zIndex: '-1', opacity: '50%' }} src={about.Logo} alt="logo" /> */}
-            {/* </div> */}
-            <div className="edit_trail_details">
+              <img width={100} height={100} style={{ zIndex: '-1', opacity: '50%' }} src={about.Mark} alt="logo" />  
+             </div> 
+             
+             <div className="edit_trail_details">
               <input
                 type="text"
                 className="edit_trail_name"
@@ -135,7 +155,8 @@ function EditTabs() {
               <Button className="save_button" type="submit" handleClick={() => { openPopup('submit'); }}>Save</Button>
             </div>
              </div>
-               <div className="edit_trail_wrapper">
+             </div>
+             <div className="edit_trail_wrapper">
                <i className="icons-edit">{LocationIcon}</i>
               <input
                 type="text"
@@ -168,8 +189,9 @@ function EditTabs() {
               />
             </div>
             
+          
           </div>
-
+          
           <ul className="nav">
             <div className="tabs-wrapper">
               <li

@@ -1,0 +1,22 @@
+.scroll_on_top {
+    display: flex;
+    flex-direction: row;
+    padding-right: 100px;
+}
+.scroll_button {
+    position: fixed;
+    width: 100px;
+    height: 65px;
+    background: #228b22;
+    border-radius: 7px;
+    border: none;
+    left: 20px;
+    bottom: 10px;
+}
+.scroll_paragraph {
+    color: #ffffff;
+}
+.scroll_button:hover {
+    background: #228b22;
+    transform: scale(1.05);
+}

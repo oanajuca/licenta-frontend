@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import useQuery from '../../helpers/UseQuery';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import Map from '../tab-pages-components/map';
 import Button from '../button-component';
 import AddOverview from './overview';
 import Popup, { INITIAL_POPUP_CONFIG } from '../popup-component';
 import Review from '../tab-pages-components/review';
 import {TimeIcon, DistanceIcon, LocationIcon, DifficultyIcon} from '../tab-component/icons';
+import AddTouristGuide from '../tab-pages-components/ghid';
+import './style.css'
 
 const DIFFICULTIES =['Usor','Mediu','Greu'];
 
 function AddNewTabs() {
-  const navigate = useNavigate('');
-  const query = useQuery();
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState();
-  const [activeTab, setActiveTab] = useState('Despre');
-  const [about, setAbout] = useState({});
-  const [difficulty, setDifficulty]= useState({})
-  const params = useParams();
+  const [activeTab, setActiveTab] = useState('NewDespre');
   const [formIsValid, setFormIsValid] = useState(true);
   const [popupConfig, setPopupConfig] = useState(INITIAL_POPUP_CONFIG);
+  const { register, handleSubmit } = useForm();
   const closePopup = () => {
     setPopupConfig(INITIAL_POPUP_CONFIG);
   };
-  const tabs = ['Despre', 'Harta', 'Recenzii'];
-  const changeTab = (tabIndex) => {
-    closePopup();
 
+  const tabs = ['NewDespre', 'NewHarta','New Ghidul Turistului', 'NewRecenzii'];
+  const changeTab = (tabIndex) => {
     setActiveTab(tabs[tabIndex]);
-   
+    navigate(`/addnewtrail/ ?tab=${tabIndex}`);
   };
   const onSubmit = () => {
     if (formIsValid) {
@@ -55,7 +53,7 @@ function AddNewTabs() {
       newPopupConfig.message = 'Aceasta actiune va inchide editorul si va sterge toate schimbarile.\n Sunteti sigur ca doriti sa iesiti?';
       newPopupConfig.btnType = 'red';
       newPopupConfig.confirm.label = 'Confirmare';
-      newPopupConfig.confirm.action = () => navigate(`/trail/${params.id}?tab=${0}`);
+      newPopupConfig.confirm.action = () => navigate(`/home`);
     }
     if (type === 'submit') {
       newPopupConfig.message = 'Informatiile vor fi schimbate permanent.\n Doriti sa continuati?';
@@ -63,26 +61,18 @@ function AddNewTabs() {
       newPopupConfig.confirm.label = 'Confirmare';
       newPopupConfig.confirm.action = onSubmit;
     }
-    if (type === 'changeTab') {
-      newPopupConfig.cancel.action = () => changeTab(tabIndex);
-      newPopupConfig.cancel.label = 'Ignorare';
-      newPopupConfig.message = 'Editarile trebuie salvate ca sa puteti schimba tab-ul. Daca nu sunt editari, ignorati acest mesaj.';
-      newPopupConfig.btnType = 'green';
-      newPopupConfig.confirm.label = 'Salvare';
-      newPopupConfig.confirm.action = () => openPopup('submit');
-    }
     setPopupConfig(newPopupConfig);
   };
-
-  const changeTabAction = (tabIndex) => {
-    if (tabs[tabIndex] !== activeTab) openPopup('changeTab', tabIndex);
+  const submitForm = (data) => {
+    const dataJson = JSON.stringify(data);
+    console.log(dataJson); // data will be transfered with save button (submit for test)
   };
   return (
     <div className="Tabs">
       <div className="tabs_header_comp">
         <div className="edit_header">
-         {/*  <div className="edit_header_comp"> */}
-           {/*  <div className="photo">
+        <form className="edit_header_comp" onSubmit={handleSubmit(submitForm)}>
+             <div className="photo">
               {selectedImage && (
               <img
                 className="newPhoto"
@@ -93,21 +83,19 @@ function AddNewTabs() {
               />
 
               )}
-              <label htmlFor="upload-photo-edit">Change picture</label>
+              <label htmlFor="upload-photo-edit">Incarca o imagine</label>
               <input
+              {...register('Mark')}
                 type="file"
                 id="upload-photo-edit"
                 onChange={(event) => {
-                  setAbout(event.target.value);
                   setSelectedImage(event.target.files[0]);
                 }}
-              /> */}
-
-        
-             {/* <img width={100} height={100} style={{ zIndex: '-1', opacity: '50%' }} src={about.Logo} alt="logo" /> */}
-            {/* </div> */}
+              /> 
+             </div> 
             <div className="edit_trail_details">
               <input
+                {...register('Name')}
                 type="text"
                 className="edit_trail_name"
               />
@@ -119,18 +107,21 @@ function AddNewTabs() {
                <div className="edit_trail_wrapper">
                <i className="icons-edit">{LocationIcon}</i>
               <input
+              {...register('Location')}
                 type="text"
                 className="edit_trail"
                 
               />
               <i className="icons-edit">{DistanceIcon}</i>
               <input
+              {...register('Distance')}
                 type="text"
                 className="edit_trail"
                
               />
               <i className="icons-edit">{DifficultyIcon}</i>
               <select
+              {...register('Difficulty')}
                 name="select_difficulty"
                 className="edit_trail"
                 
@@ -139,19 +130,21 @@ function AddNewTabs() {
                  </select>
               <i className="icons-edit">{TimeIcon}</i>
               <input
+              {...register('Time')}
                 type="text"
                 className="edit_trail"
                 
               />
+              
             </div>
-            
+            </form>
           </div>
-
+          
           <ul className="nav">
             <div className="tabs-wrapper">
               <li
-                label="Overview"
-                className={activeTab === 'Despre' ? 'active' : ''}
+                label="NewDespre"
+                className={activeTab === 'NewDespre' ? 'active' : ''}
                 onClick={() => { changeTabAction(0); }}
               >
                 Despre
@@ -162,9 +155,16 @@ function AddNewTabs() {
                 Harta
               </li>
               <li
-                label="Recenzii"
-                className={`inactive ${activeTab ===  'Recenzii' ? 'active' : ''}`}
+                label="New Ghidul Turistului"
+                className={activeTab === 'New Ghidul Turistului' ? 'active' : ''}
                 onClick={() => { changeTabAction(2); }}
+              >
+                Ghidul Turistului
+              </li>
+              <li
+        
+                className={`inactive ${activeTab ===  'Recenzii' ? 'active' : ''}`}
+                
               >
                 Recenzii
               </li>
@@ -187,6 +187,7 @@ function AddNewTabs() {
           <div className="outlet">
             {activeTab === 'Despre' ? <AddOverview isEditable setFormValid={setFormIsValid} /> : ''}
             {activeTab === 'Harta' ? <Map /> : ''}
+            {activeTab === 'Ghidul Turistului' ? <AddTouristGuide /> : ''}
             {activeTab === 'Recenzii' ? <Review/> : ''}
           </div>
         </div>

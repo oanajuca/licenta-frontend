@@ -14,3 +14,15 @@
     padding-left: 255px;
     z-index: 1;
 }
+.save_guide{
+    cursor: pointer;
+    width: 380px;
+    height: 57px;
+    background: #228b22;
+    border-radius: 7px;
+    font-size: 18px;
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #228b22;
+    margin-left: 25px;
+}

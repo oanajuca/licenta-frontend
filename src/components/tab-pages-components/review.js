@@ -1,22 +1,32 @@
 
-import React,{useState,useEffect}from "react";
+import React,{useState,useEffect,useContext}from "react";
 import Popup, { INITIAL_POPUP_CONFIG } from "../popup-component";
-import Reviews from "../review-component";
 import { useParams } from "react-router-dom";
-import Spinner from "../spinner-component";
-import ReviewForm from "./ReviewForm";
+import Spinner from '../spinner-component';
+import Button from "../button-component";
+import Rating from "../rating-component";
+import Reviews from "../review-component/reviews";
 import { WriteReviewIcon } from "./icons";
+import UserContext from "../../helpers/UseContext/UserContext";
+import './review.css';
+import ScrollButton from "../scroll-button-component";
+import DefRating from "../default-rating-component";
+import { DeleteIcon,Quotes } from "./icons";
 
-export default function Review() {
+
+export default function Review({isEditable}) {
     const [popupConfig, setPopupConfig] = useState(INITIAL_POPUP_CONFIG);
+    const { userState } = useContext(UserContext);
     const [reviews, setReviews] = useState(['']);
     const [user, setUser] = useState(['']);
+    const[trails,setTrails] = useState(['']);
     const [isLoading, setIsLoading] = useState(false);
 const params =useParams();
     useEffect(() => {
-     /*  const loadUser = async () => {
+    /*   const loadUser = async () => {
+        const userid = reviews.map((revi) => revi.UserId);
         setIsLoading(true);
-        fetch(`http://localhost:8088/apuseniilapas/api/user/${params.id}`, {
+        fetch(`http://localhost:8088/apuseniilapas/api/user/${userid}`, {
           method: "GET",
         })
           .then((response) => response.json())
@@ -24,7 +34,8 @@ const params =useParams();
             setIsLoading(false);
             setUser(data);
           });
-      }; */
+      }; */ 
+      console.log(userid);
       const loadTrailReviews = async () => {
         setIsLoading(true);
         fetch(`http://localhost:8088/apuseniilapas/api/trail/${params.id}`, {
@@ -33,13 +44,55 @@ const params =useParams();
           .then((response) => response.json())
           .then((data) => {
             setIsLoading(false);
-            setReviews(data.Review);
+            setTrails(data)
+            setReviews(data.TrailReview);
           });
       };
       loadTrailReviews();
-     // loadUser();
+      //loadUser();
     }, [params.id]);
 
+    const [stars, setStars] = useState(1);
+    const [comment, setComment] =useState('');
+    const [error, setError] = useState('');
+    const [isAuthenticated, setIsAuthenticated] =useState(false);
+    const [success, setSuccess] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+
+        const exp =( star ) => {setStars(star)}
+        const handleComment =(e) => {
+          setComment(e.target.value)
+        }
+        useEffect(() => {
+          if(userState.Id === ''){
+            setIsAuthenticated(false);
+        }
+        else{
+            setIsAuthenticated(true)
+        }
+          handleadd()
+        })
+      
+   
+          const handleadd=  () => {
+            fetch(`http://localhost:8088/apuseniilapas/api/review/addreview?&comment=${comment}&stars=${stars}&userid=${userid}&trailId=${params.id}`, {
+              method: 'POST',
+            })
+              .then((response) => {
+                if (response.ok) {
+                 
+                  window.location.reload();
+                  setSuccess('Recenzia a fost adaugata cu succes!');
+                  return response;
+                }
+                throw new Error(response.status);
+              }).then(() => {
+                setTimeout(() => { <p>Doriti sa adaugati mai multe recenzii?</p>; });
+              }).catch(() => {
+                setError('Ceva nu a mers bine.');
+              });
+            } 
+     
     const openPopup = (type) => {
         const newPopupConfig = {
           isOpen: true,
@@ -52,13 +105,15 @@ const params =useParams();
           },
           confirm: {
             label: 'Adaugă Recenzia',
+            action: handleadd && closePopup
+            
           },
         };
         if (type === 'post') {
           newPopupConfig.message = 'This action will close the editor and revert all changes. Are you sure you wish to exit?';
           newPopupConfig.btnType = 'green';
           newPopupConfig.size = 'large';
-          newPopupConfig.confirm.action = handlepost;
+         
 
         }
         setPopupConfig(newPopupConfig);
@@ -66,16 +121,14 @@ const params =useParams();
     const closePopup = () => {
         setPopupConfig(INITIAL_POPUP_CONFIG);
       };
-      const handlepost=() => {
-
-      }
+      const userid = userState.Id;
     return(
       <div>
-        <div className="rev-form1">
-                <label>{user.FirstName}</label>
-                <label>{user.Lastname}</label>
-                <label>{user.Username}</label>
-                </div>
+        {!isEditable && (
+          <>
+        <div className="titlul_paginii">
+          Ce spun altii
+        </div>
                 <div>
                 {!reviews ? (<Spinner />) : reviews.map((rev) => (
                   <Reviews
@@ -85,8 +138,11 @@ const params =useParams();
                   />
                   ))
                   }
-
-               </div>
+                  </div>
+                  
+               </>
+      )}
+               {isAuthenticated ?
         <a className="write-review" >
        <i  className="write-icon" alt="Review" onClick={() => { openPopup('post'); }} >
            {WriteReviewIcon}
@@ -95,12 +151,80 @@ const params =useParams();
           <Popup
           popupConfig={popupConfig}
             content={(
-              <ReviewForm />
+              <div className="large-box-rev">
+        <form className="addreview_form">
+        
+            <div className="adauga_recenzie">
+            
+            <div className="stars">
+           <label className="overview-labels">Evaluează-ți experiența</label>
+           <div >
+             
+           <Rating experience={exp}
+           />
+           </div>
+            
+    </div>
+    <div className="comment">
+    <label className="overview-labels">Adauga comentariul tau</label>
+       <textarea
+       className="comment_zone"
+        type="text"
+        onBlur={handleComment}
+        placeholder="Introduceti un comentariu aici"
+        name="Comment"
+       />
+  </div>
+  </div>
+
+        </form>
+      </div> 
             )}
            
           />
         )}
-      </a>
+        
+      </a> : ""}
+      {isEditable && (
+        <div>
+        {!reviews ? (<Spinner />) : reviews.map((rev) => (
+          <div className="review_wrapper">
+          <div className="review_desc">
+              <div className="card">
+              <i className="quotes">{Quotes}</i>
+              <div className="stars_description_input">
+                  <DefRating star={rev.Stars}/>
+              
+              </div>
+              <div className="comm_description_input">
+                {rev.Comment}
+              </div>
+              <i className="quotes2">{Quotes}</i>
+              </div>
+              <Button
+                  type="button"
+                  className="delete_review"
+                  handleClick={() => {
+                    fetch(
+                        `http://localhost:8088/apuseniilapas/api/review/delete/${rev.Id}`,
+                        { method: 'DELETE',
+                        
+                       },
+                       window.location.reload()
+                      )
+                      
+                  }}
+                >
+                  {DeleteIcon} Sterge Recenzia
+                </Button>
+              </div>
+              </div>
+            ))
+          }
+       </div>
+      )}
+      <ScrollButton />
+     
       </div>
     )
 }
