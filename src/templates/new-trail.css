@@ -1,0 +1,45 @@
+
+.new-trail_wrapper {
+    width: 50%;
+    margin: auto;
+    max-width: 600px;
+}
+
+.form_wrapper{
+    display: flex;
+}
+.button__createtrail{
+    border-radius: 7px;
+    background-color: #228B22;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 32px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #228B22;
+    margin-top: 10px;
+}
+.firstcol{
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+.secondcol{
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+.card1{
+    display: flex;
+    margin-left: -350px;
+    padding-top: 30px;
+}
+.addpagetitle{
+    color: #3d3d3d;
+    font-weight: 500;
+    font-size: 36px;
+    padding-top: 15px;
+    margin-left: -330px;
+}

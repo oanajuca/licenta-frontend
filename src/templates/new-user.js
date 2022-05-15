@@ -101,7 +101,7 @@ function NewUser() {
               setInputError={setInputError}
               placeholder="e.g. ioana.popescu@yahoo.com"
             />
-            <FormInput
+            <input
               type="hidden"
               label="Rol"
               value={role}

@@ -1,32 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import useQuery from '../../helpers/UseQuery';
 import Overview from '../tab-pages-components/ovierview';
 import Map from '../tab-pages-components/map';
 import Button from '../button-component';
-import Spinner from '../spinner-component';
 import Popup, { INITIAL_POPUP_CONFIG } from '../popup-component';
 import Review from '../tab-pages-components/review';
 import {TimeIcon, DistanceIcon, LocationIcon, DifficultyIcon} from '../tab-component/icons';
 import TouristGuide from '../tab-pages-components/ghid';
 
-const DIFFICULTIES =['Usor','Mediu','Greu'];
 
-function EditTabs(props) {
-  const {TrailId} = props;
-  const {tra} =props;
+
+function EditTabs() {
   const navigate = useNavigate('');
   const query = useQuery();
-  const [selectedImage, setSelectedImage] = useState();
   const [activeTab, setActiveTab] = useState('Despre');
   const [about, setAbout] = useState({});
-  const [difficulty, setDifficulty]= useState({})
   const params = useParams();
   const [formIsValid, setFormIsValid] = useState(true);
   const [popupConfig, setPopupConfig] = useState(INITIAL_POPUP_CONFIG);
-  const { register, handleSubmit } = useForm({ defaultValues: tra });
+
   const closePopup = () => {
     setPopupConfig(INITIAL_POPUP_CONFIG);
   };
@@ -37,27 +31,28 @@ function EditTabs(props) {
     setActiveTab(tabs[tabIndex]);
     navigate(`/edit/${params.id}?tab=${tabIndex}`);
   };
+  const stayinTab = (currTab) => {
+    closePopup();
+
+    setActiveTab(tabs[currTab]);
+    navigate(`/edit/${params.id}?tab=${currTab}`);
+  };
   useEffect(() => {
      const loadAbout = async () => {
       fetch(`http://localhost:8088/apuseniilapas/api/trail/${params.id}`, {
         method: 'GET',
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then((data) => 
           setAbout(data)
-        setDifficulty(data.TrailDifficulty)});
+        );
     }; 
     const currTab = query.get('tab');
     setActiveTab(tabs[currTab]);
      loadAbout();
   }, [params.id, query]);
 
-  const onSubmit = () => {
-    if (formIsValid) {
-      setPopupConfig(INITIAL_POPUP_CONFIG);
-      console.log('Form submitted');
-    } 
-  };
+
 
   const openPopup = (type, tabIndex) => {
     const newPopupConfig = {
@@ -79,19 +74,14 @@ function EditTabs(props) {
       newPopupConfig.confirm.label = 'Confirmare';
       newPopupConfig.confirm.action = () => navigate(`/trail/${params.id}?tab=${0}`);
     }
-    if (type === 'submit') {
-      newPopupConfig.message = 'Informatiile vor fi schimbate permanent.\n Doriti sa continuati?';
-      newPopupConfig.btnType = 'green';
-      newPopupConfig.confirm.label = 'Confirmare';
-      newPopupConfig.confirm.action = onSubmit;
-    }
     if (type === 'changeTab') {
       newPopupConfig.cancel.action = () => changeTab(tabIndex);
       newPopupConfig.cancel.label = 'Ignorare';
       newPopupConfig.message = 'Editarile trebuie salvate ca sa puteti schimba tab-ul. Daca nu sunt editari, ignorati acest mesaj.';
       newPopupConfig.btnType = 'green';
-      newPopupConfig.confirm.label = 'Salvare';
-      newPopupConfig.confirm.action = () => openPopup('submit');
+      newPopupConfig.confirm.action = () => stayinTab(tabIndex);
+      newPopupConfig.confirm.label = 'Mergi la Salvare';
+
     }
     setPopupConfig(newPopupConfig);
   };
@@ -99,96 +89,31 @@ function EditTabs(props) {
   const changeTabAction = (tabIndex) => {
     if (tabs[tabIndex] !== activeTab) openPopup('changeTab', tabIndex);
   };
-  const submitForm = (data) => {
-    const dataJson = JSON.stringify({"Trail" : [{
-      Id:data.Id,
-      Mark: data.Mark,
-        Location: data.Location,
-       Distance:data.Distance,
-      Time: data.Time ,
-      }],
-      Description: data.Description,
-      TrailId: data.TrailId
-    })
-    console.log(dataJson);
-    
-  };
+
   return (
     <div className="Tabs">
       <div className="tabs_header_comp">
         <div className="edit_header">
        
            <div className="edit_header_comp"> 
-             <div className="photo">
-              {selectedImage && (
-              <img
-                className="newPhoto"
-                alt="not found"
-                width={100}
-                height={100}
-                src={URL.createObjectURL(selectedImage)}
-              />
-
-              )}
-              <label htmlFor="upload-photo-edit">Change picture</label>
-              <input
-                type="file"
-                id="upload-photo-edit"
-                onChange={(event) => {
-                  setAbout(event.target.value);
-                  setSelectedImage(event.target.files[0]);
-                }}
-              />
-        
-              <img width={100} height={100} style={{ zIndex: '-1', opacity: '50%' }} src={about.Mark} alt="logo" />  
-             </div> 
+           <div className="trail_name">{about.Name}
+                           <img className="trail_logo" width={60} height={60} src={about.Mark} alt="logo"></img> </div>
              
              <div className="edit_trail_details">
-              <input
-                type="text"
-                className="edit_trail_name"
-                value={about.Name}
-                onChange={(e) => setAbout(e.target.value)}
-              />
+             
               <div className="buttons-wrapper_edit">
               <Button className="cancel_button" type="reset" handleClick={() => { openPopup('cancel'); }}>Cancel</Button>
-              <Button className="save_button" type="submit" handleClick={() => { openPopup('submit'); }}>Save</Button>
             </div>
              </div>
              </div>
              <div className="edit_trail_wrapper">
-               <i className="icons-edit">{LocationIcon}</i>
-              <input
-                type="text"
-                className="edit_trail"
-                value={about.Location}
-                onChange={(e) => setAbout(e.target.value)}
-              />
-              <i className="icons-edit">{DistanceIcon}</i>
-              <input
-                type="text"
-                className="edit_trail"
-                value={about.Distance}
-                onChange={(e) => setAbout(e.target.value)}
-              />
-              <i className="icons-edit">{DifficultyIcon}</i>
-              <select
-                name="select_difficulty"
-                className="edit_trail"
-                value={difficulty.Description}
-                onChange={(e) => setDifficulty(e.target.value)}
-              >
-                 {DIFFICULTIES.map((item) => <option key={item} value={item}>{item}</option>)}
-                 </select>
-              <i className="icons-edit">{TimeIcon}</i>
-              <input
-                type="text"
-                className="edit_trail"
-                value={about.Time}
-                onChange={(e) => setAbout(e.target.value)}
-              />
-            </div>
-            
+             <div className="trail_desc"><i className="icons">{LocationIcon}</i>{about.Location}</div>
+                                
+                                <div className="trail_desc"><i className="icons">{DifficultyIcon}</i>{about.Difficulty}</div>
+                                <div className="trail_desc"><i className="icons">{DistanceIcon}</i>{about.Distance}</div>
+                                <div className="trail_desc"><i className="icons">{TimeIcon}</i>{about.Time}</div>
+                                
+                            </div>
           
           </div>
           

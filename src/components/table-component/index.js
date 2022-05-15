@@ -8,7 +8,7 @@ import { TimeIcon,LocationIcon,DistanceIcon} from "./icons";
 import UserContext from "../../helpers/UseContext/UserContext";
 
 
-const DATA_ROWS_LIMIT = 8;
+const DATA_ROWS_LIMIT = 7;
 
 export default function Table() {
     const headers = ['Traseul', 'Distanța', 'Durata', 'Locatie']

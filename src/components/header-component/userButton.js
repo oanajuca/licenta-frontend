@@ -33,6 +33,7 @@ function UserButton() {
   const handleSignOut = () => {
     localStorage.removeItem('userSession');
     navigate('/');
+    window.location.reload()
   };
   
 

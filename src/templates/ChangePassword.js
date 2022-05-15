@@ -6,6 +6,7 @@ import CardComponent from '../components/card-component';
 import { EyeCloseIcon, EyeOpenIcon } from '../components/input-component/icons';
 import Spinner from '../components/spinner-component';
 
+
 export default function ChangePass() {
   const { userState } = useContext(UserContext); 
   const [password, setPassword] = useState();

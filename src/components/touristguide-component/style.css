@@ -7,7 +7,7 @@
     .guide_description{
         display: flex;
     }
-    .guide_description{
+   /*  .guide_description{
         border: 2px solid #228b22;
         width:350px;
         height: 350px;
@@ -16,14 +16,13 @@
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
-    }
+    } */
     
 .inputs {
     display: flex;
     align-items: center;
     font-size: 20px;
     font-weight: 600;
-    color: yellow;
     padding: 25px;
     padding-left: 30px;
     text-align: center;
@@ -32,18 +31,20 @@
 .guide_icons{
     display: flex;
     align-items: center;
-    fill: #ffffff;
+   
 }
-.guid_description{
+/* .guid_description{
     border: 2px solid #228b22;
     width:350px;
     height: 350px;
     border-radius: 50%;
     background-color: #228b22;
     display: flex;
-}
+} */
 .row1, .row2 , .row3{
     padding: 60px;
+    display: flex;
+    flex-direction: column;
 }
 .allshape{
     padding-bottom: 60px;
@@ -58,8 +59,32 @@
     display: flex;
     justify-content: center;
     width: 1150px;
-    margin-left: 145px;
+    margin-left: 300px;
     height: 110px;
     border: 5px solid #228b22;
     margin-top: 25px;
+}
+.papershape{
+    display: flex;
+    align-items: center;
+    fill: black;
+}
+.ruledescription{
+    margin-top: -100px;
+    margin-left: 0px;
+}
+.rulenumber{
+        font-size: 25px;
+        background: #FFD700;
+        width: 180px;
+        height: 50px;
+        border: 5px solid #FFD700;
+    
+}
+.cardul1, .cardul2, .cardul3, .cardul4, .cardul5, .cardul6, .cardul7, .cardul8, .cardul9{ 
+    display: flex;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 450px;
+    height: 350px;
 }

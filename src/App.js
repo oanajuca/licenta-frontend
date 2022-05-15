@@ -8,6 +8,8 @@ import AddNewTrailPage from './pages/addnewtrail';
 import ChangePassword from './pages/change-password-page';
 import SuccessfullyChangedPassword from './templates/SuccessfullyChangedPassword';
 import UserContextProvider from './helpers/UseContext/UserContextProvider';
+import AddNewTrailDescriptionPage from './pages/addnewdescription';
+import AddNewTrailGuidePage from './pages/addguide';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
       <Route path ="/home" element={<HomePage />} />
       <Route exact path = "/trail/:id" element={<TrailPage />} />
       <Route exact path="/addnewtrail" element={<AddNewTrailPage />} />
+      <Route exact path="/addnewdescription" element={<AddNewTrailDescriptionPage />} />
+      <Route exact path="/addnewguide" element={<AddNewTrailGuidePage />} />
       <Route path=":id" element={<TrailPage />} />
       <Route path="edit/:id" element={<EditTrailPage />} />
       <Route path="/change-password" element={<ChangePassword />} />

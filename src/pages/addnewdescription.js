@@ -1,11 +1,12 @@
-import NewTrail from "../templates/new-trail";
-import HeaderComponent from "../components/header-component";
 
-export default function AddNewTrailPage(){
+import HeaderComponent from "../components/header-component";
+import NewTrailDescription from "../templates/new-description";
+
+export default function AddNewTrailDescriptionPage(){
     return (
         <div className="client_page">
           <HeaderComponent />
-           <NewTrail /> 
+           <NewTrailDescription /> 
         </div>
       );
 }

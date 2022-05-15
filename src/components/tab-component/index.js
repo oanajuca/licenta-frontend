@@ -38,10 +38,10 @@ export default function Tabs() {
                 method: 'GET',
             })
             .then((response) => response.json())
-            .then((data) => {
+            .then((data) => 
 
              setTrails(data)
-             setDiff(data.TrailDifficulty)});
+             );
         };
         loadTrails();
         const currTab = query.get('tab');
@@ -68,8 +68,8 @@ export default function Tabs() {
                             <div className="trail_details">
                             
                                 <div className="trail_desc"><i className="icons">{LocationIcon}</i>{trails.Location}</div>
-                                {diff.map((dif)=> 
-                                <div className="trail_desc"><i className="icons">{DifficultyIcon}</i>{dif.Description}</div>)}
+                               
+                                <div className="trail_desc"><i className="icons">{DifficultyIcon}</i>{trails.Difficulty}</div>
                                 <div className="trail_desc"><i className="icons">{DistanceIcon}</i>{trails.Distance}</div>
                                 <div className="trail_desc"><i className="icons">{TimeIcon}</i>{trails.Time}</div>
                                 
